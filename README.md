@@ -1,4 +1,4 @@
 Calculator Application Demo for CI/CD Workflow
 
 Test cicd workflow:
-8️⃣🥳🥳🥳
+9 Test - Migrate freestyle to PaC
