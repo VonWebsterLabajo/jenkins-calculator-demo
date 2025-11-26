@@ -1,202 +1,56 @@
 <!doctype html>
-<html lang="en">
-
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Simple Calculator Demo</title>
-
-  <style>
-    /* -------- Global Styles -------- */
-    :root {
-      --bg-gradient: linear-gradient(135deg, #74ebd5 0%, #ACB6E5 100%);
-      --card-bg: rgba(255, 255, 255, 0.15);
-      --card-border: rgba(255, 255, 255, 0.25);
-      --text-dark: #222;
-      --text-light: #f9f9f9;
-      --accent: #0077ff;
-      --radius: 1rem;
-      --shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
-    }
-
-    body {
-      font-family: "Segoe UI", system-ui, sans-serif;
-      background: var(--bg-gradient);
-      color: var(--text-dark);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
-      margin: 0;
-      padding: 1rem;
-    }
-
-    /* -------- Calculator Container -------- */
-    .calculator {
-      background: var(--card-bg);
-      backdrop-filter: blur(12px);
-      border: 1px solid var(--card-border);
-      border-radius: var(--radius);
-      padding: 2rem;
-      box-shadow: var(--shadow);
-      max-width: 400px;
-      width: 100%;
-      text-align: center;
-      color: var(--text-light);
-    }
-
-    h1 {
-      margin-bottom: 1.5rem;
-      font-size: 1.8rem;
-      letter-spacing: 0.5px;
-    }
-
-    /* -------- Form Elements -------- */
-    .row {
-      margin: 1rem 0;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    label {
-      flex: 1;
-      text-align: left;
-    }
-
-    input,
-    select {
-      flex: 1;
-      margin-left: 1rem;
-      padding: 0.5rem 0.75rem;
-      border: none;
-      border-radius: 6px;
-      font-size: 1rem;
-      outline: none;
-      transition: all 0.2s ease-in-out;
-    }
-
-    input:focus,
-    select:focus {
-      box-shadow: 0 0 0 2px var(--accent);
-    }
-
-    button {
-      width: 100%;
-      padding: 0.7rem;
-      background: var(--accent);
-      color: white;
-      border: none;
-      border-radius: 6px;
-      font-size: 1.1rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-    }
-
-    button:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-    }
-
-    /* -------- Result Display -------- */
-    #result {
-      margin-top: 1.5rem;
-      font-size: 1.3rem;
-      font-weight: 600;
-      background: rgba(255, 255, 255, 0.2);
-      padding: 0.75rem;
-      border-radius: 8px;
-    }
-
-    .footer {
-      margin-top: 1.5rem;
-      font-size: 0.9rem;
-      opacity: 0.8;
-    }
-
-    .footer a {
-      color: var(--text-light);
-      text-decoration: none;
-    }
-
-    .footer a:hover {
-      text-decoration: underline;
-    }
-  </style>
-</head>
-
-<body>
-  <div class="calculator">
-    <h1>🧮 Simple Calculator v3.5</h1>
-
+<html>
+  <head>
+    <meta charset="utf-8"/>
+    <title>Simple Calculator</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <style>
+      body{font-family:system-ui,Segoe UI,Arial,sans-serif;margin:2rem;max-width:520px}
+      h1{margin-bottom:1rem}
+      .row{margin:.5rem 0}
+      input,select,button{padding:.4rem;font-size:1rem}
+      input{width:10rem}
+      #result{margin-top:1rem;font-weight:600}
+    </style>
+  </head>
+  <body>
+    <h1>Simple Calculator App</h1>
+    <div class="row"><label>Number 1: <input id="a" type="number" value="2" step="any"></label></div>
+    <div class="row"><label>Number 2: <input id="b" type="number" value="3" step="any"></label></div>
     <div class="row">
-      <label for="a">Number 1</label>
-      <input id="a" type="number" value="2" step="any" />
+      <label>Operations:
+        <select id="op">
+          <option value="add" selected>Add</option>
+          <option value="sub">Subtract</option>
+          <option value="mul">Multiply</option>
+          <option value="div">Divide</option>
+        </select>
+      </label>
     </div>
+    <div class="row"><button id="compute">Compute</button></div>
+    <div id="result">Result:</div>
 
-    <div class="row">
-      <label for="b">Number 2</label>
-      <input id="b" type="number" value="3" step="any" />
-    </div>
-
-    <div class="row">
-      <label for="op">Operation</label>
-      <select id="op">
-        <option value="add" selected>Add</option>
-        <option value="sub">Subtract</option>
-        <option value="mul">Multiply</option>
-        <option value="div">Divide</option>
-      </select>
-    </div>
-
-    <button id="compute">Compute</button>
-
-    <div id="result">Result: —</div>
-
-    <div class="footer">
-      <p>
-        Built with ❤️ for demo purposes —
-        <a href="https://github.com/avidcutlet/" target="_blank">View on GitHub</a>
-      </p>
-    </div>
-  </div>
-
-  <script>
-    function calc(a, b, op) {
-      a = parseFloat(a);
-      b = parseFloat(b);
-      switch (op) {
-        case "add":
-          return a + b;
-        case "sub":
-          return a - b;
-        case "mul":
-          return a * b;
-        case "div":
-          if (b === 0) throw new Error("Division by zero");
-          return a / b;
+    <script>
+      function calc(a,b,op){
+        a = parseFloat(a); b = parseFloat(b);
+        switch(op){
+          case 'add': return a + b;
+          case 'sub': return a - b;
+          case 'mul': return a * b;
+          case 'div': if (b === 0) throw new Error('Division by zero'); return a / b;
+        }
       }
-    }
-
-    document
-      .getElementById("compute")
-      .addEventListener("click", () => {
-        const a = document.getElementById("a").value;
-        const b = document.getElementById("b").value;
-        const op = document.getElementById("op").value;
-        const resultDiv = document.getElementById("result");
-
+      document.getElementById('compute').addEventListener('click', () => {
+        const a = document.getElementById('a').value;
+        const b = document.getElementById('b').value;
+        const op = document.getElementById('op').value;
         try {
-          const r = calc(a, b, op);
-          resultDiv.textContent = "Result: " + r.toFixed(4);
-          resultDiv.style.color = "#fff";
-        } catch (e) {
-          resultDiv.textContent = "Error: " + e.message;
-          resultDiv.style.color = "#ff4444";
+          const r = calc(a,b,op);
+          document.getElementById('result').textContent = 'Result: ' + r;
+        } catch(e) {
+          document.getElementById('result').textContent = 'Error: ' + e.message;
         }
       });
-  </script>
-</body>
-
+    </script>
+  </body>
 </html>
